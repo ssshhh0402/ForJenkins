@@ -1,0 +1,32 @@
+pipeline{
+	agent none
+	options { skipDefaultCheckout(true)}
+	stages {
+		stage('Checkout repository'){
+			agent any
+			step{
+				checkout scm
+			}
+		}
+		stage('Build and Test'){
+			agent{
+				docker{
+					image 'gradle:6.6.1-jdk11-openj9'
+				}
+			}
+			steps {
+				sh 'gradle clean build -x test'
+			}
+		}
+		stage('Docker build'){
+			agent any
+			steps {
+				sh 'docker build -t 192.168.0.31:5000/dockertesting3 .'
+			}
+		}
+		stage('Nexus Push'){
+			agent any
+			steps {
+				sh 'docker push 192.168.0.31:5000/dockertesting3'
+	}
+}
