@@ -21,11 +21,8 @@ pipeline{
             steps{
                 script{
                     docker.withRegistry("https://${IMAGE_STORAGE}", IMAGE_STORAGE_CREDENTIAL){
-                        echo "1"
                         image.push("${env.BUILD_NUMBER}")
-                        echo "2"
                         image.push("latest")
-                        echo "3"
                     }
                 }
             }
