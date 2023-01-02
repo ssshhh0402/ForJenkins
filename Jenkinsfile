@@ -21,8 +21,8 @@ pipeline{
             steps{
                 script{
                     sh "docker login -u admin -p tnsqja4856 192.168.0.31:5000"
-                    image.push("${env.BUILD_NUMBER}")
-                    imaage.push("${latest}")
+                    sh "docker push ${image}/${env.BUILD_NUMBER}"
+                    sh "docker push ${Iimage}/${latest}"
                     // docker.withRegistry("https://${IMAGE_STORAGE}", IMAGE_STORAGE_CREDENTIAL){
                     //     image.push("${env.BUILD_NUMBER}")
                     //     image.push("latest")
