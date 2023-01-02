@@ -26,7 +26,7 @@ pipeline{
                     //     image.push("${env.BUILD_NUMBER}")
                     //     image.push("latest")
                     // }
-                    echo 'Update Testing3'
+                    echo 'Update Testing4'
                     sh 'docker login -u admin -p tnsqja4856 192.168.0.31:5000'
                     sh "docker push ${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_NUM}"
                     sh "docker push ${IMAGE_STORAGE}/${IMAGE_NAME}:latest"
