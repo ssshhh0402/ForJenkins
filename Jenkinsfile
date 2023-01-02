@@ -4,18 +4,12 @@ pipeline{
         stage("Set Variable"){
             steps{
                 script {
-                    IMAGE_NAME="dockertesting"
+                    IMAGE_NAME="dockertesting3"
                     IMAGE_STORAGE = "192.168.0.31:5000"
                     IMAGE_STORAGE_CREDENTIAL = "NexusCredentials"
                 }
             }
         }
-        // stage("Clean Build Test"){
-        //     steps{
-        //         sh "chmod +x gradlew"
-        //         sh "./gradlew clean build -x test"
-        //     }
-        // }
         stage("Build Container Image"){
             steps{
                 script{
@@ -26,7 +20,7 @@ pipeline{
         stage("Push ContainerImage"){
             steps{
                 script{
-                    docker.withRegistry("http://${IMAGE_STORAGE}", IMAGE_STORAGE_CREDENTIAL){
+                    docker.withRegistry("http://${IMAGE_STORAGE}/${IMAGE_NAME}", IMAGE_STORAGE_CREDENTIAL){
                         image.push("${env.BUILD_NUMBER}")
                         image.push("latest")
                         image
