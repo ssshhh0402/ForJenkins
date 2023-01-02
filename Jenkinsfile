@@ -26,7 +26,7 @@ pipeline{
                 //         image
                 //     }
                 script{
-                    docker.withRegistry("${IMAGE_NAME}", IMAGE_STORAGE_CREDENTIAL){
+                    docker.withRegistry("https://${IMAGE_NAME}", IMAGE_STORAGE_CREDENTIAL){
                         image.push("${env.BUILD_NUMBER}")
                         image.push("latest")
                         image
