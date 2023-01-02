@@ -15,6 +15,7 @@ pipeline{
                 script{
                     image = docker.build("${IMAGE_STORAGE}/${IMAGE_NAME}")
                 }
+                sh "docker image ls -a"
             }
         }
         stage("Push ContainerImage"){
