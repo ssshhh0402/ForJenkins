@@ -5,7 +5,8 @@ pipeline{
             steps{
                 script {
                     IMAGE_NAME="dockertesting3"
-                    IMAGE_STORAGE = "192.168.0.31:5000"
+                    IMAGE_STORAGE_URL = "192.168.0.31"
+                    IMAGE_STORAGE_PORT = "5000"
                     IMAGE_STORAGE_CREDENTIAL = "NexusCredentials"
                 }
             }
@@ -13,16 +14,16 @@ pipeline{
         stage("Build Container Image"){
             steps{
                 script{
-                    image = docker.build("${IMAGE_STORAGE}/${IMAGE_NAME}")
+                    image = docker.build("${IMAGE_STORAGE_URL}:${IMAGE_STORAGE_PORT}/${IMAGE_NAME}")
                 }
             }
         }
         stage("Push ContainerImage"){
             steps{
                 script{
-                    docker.withRegistry("https://${IMAGE_STORAGE}", IMAGE_STORAGE_CREDENTIAL){
-                        image.push("${IMAGE_NAME}/${env.BUILD_NUMBER}")
-                        image.push("${IMAGE_NAME}/latest")
+                    docker.withRegistry("https://${IMAGE_STORAGE_URL}:${IMAGE_STORAGE_PORT}", IMAGE_STORAGE_CREDENTIAL){
+                        image.push("${env.BUILD_NUMBER}")
+                        image.push("latest")
                     }
                 }
             }
