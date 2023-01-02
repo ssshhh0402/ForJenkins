@@ -20,10 +20,13 @@ pipeline{
         stage("Push ContainerImage"){
             steps{
                 script{
-                    docker.withRegistry("https://${IMAGE_STORAGE}", IMAGE_STORAGE_CREDENTIAL){
-                        image.push("${env.BUILD_NUMBER}")
-                        image.push("latest")
-                    }
+                    sh "docker login -u admin -p tnsqja4856 192.168.0.31:5000"
+                    image.push("${env.BUILD_NUMBER}")
+                    imaage.push("${latest}")
+                    // docker.withRegistry("https://${IMAGE_STORAGE}", IMAGE_STORAGE_CREDENTIAL){
+                    //     image.push("${env.BUILD_NUMBER}")
+                    //     image.push("latest")
+                    // }
                 }
                 // sh "docker login -u admin -p tnsqja4856 192.168.0.31:5000"
                 // sh "docker push 192.168.0.31:5000/dockertesting3"
