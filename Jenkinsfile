@@ -26,6 +26,7 @@ pipeline{
                         image.push("latest")
                         image
                     }
+                    sh "docker image ls -a"
                 }
             }
         }
