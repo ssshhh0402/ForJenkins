@@ -15,7 +15,7 @@ pipeline{
             steps{
                 script{
                     withCredentials([
-                        NexusCredentialInfo(
+                        usernamePassword(
                             credentialsId: 'NexusCredentials',
                             id: 'Username',
                             pwd: 'Password'
