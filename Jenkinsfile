@@ -14,15 +14,8 @@ pipeline{
         stage("TEST"){
             steps{
                 script{
-                    withCredentials([
-                        usernamePassword(
-                            credentialsId: 'NexusCredentials',
-                            usernameVariable: 'ID',
-                            passwordVariable: 'pwd'
-                        )
-                    ]){
-                        sh "Username: ${id}"
-                        sh "Password: ${pwd}"
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'NexusCredentials',usernameVariable:'USERNAME', passwordVariable:'PASSWORD']]){
+                        echo "My Nexus Id : ${USERNAME}, PWD : ${PASSWORD}"
                     }
                 }
             }
