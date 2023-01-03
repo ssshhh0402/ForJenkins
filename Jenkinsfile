@@ -12,7 +12,7 @@ pipeline{
             }
         }
         stage("TEST"){
-            stepts{
+            steps{
                 script{
                     sh "Username: ${IMAGE_STORAGE_CREDENTIAL_Username}"
                     sh "Password: ${IMAGE_STORAGE_CREDENTIAL_Password}"
