@@ -8,30 +8,45 @@ pipeline{
                     IMAGE_STORAGE = "192.168.0.31:5000"
                     IMAGE_STORAGE_CREDENTIAL = "NexusCredentials"
                     IMAGE_NUM = env.BUILD_NUMBER
+                    NEXUS_ID = 'NexusCredentials-secret-key-id'
+                    NEXUS_PWD = 
                 }
             }
         }
-        stage("Build Container Image"){
-            steps{
+        stage("TEST"){
+            stepts{
                 script{
-                    image = docker.build("${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_NUM}")
-                    image2 = docker.build("${IMAGE_STORAGE}/${IMAGE_NAME}:latest")
+                    sh "Username: ${IMAGE_STORAGE_CREDENTIAL_Username}"
+                    sh "Password: ${IMAGE_STORAGE_CREDENTIAL_Password}"
                 }
             }
         }
-        stage("Push ContainerImage"){
-            steps{
-                script{
-                    // docker.withRegistry("https://${IMAGE_STORAGE_URL}:${IMAGE_STORAGE_PORT}", IMAGE_STORAGE_CREDENTIAL){
-                    //     image.push("${env.BUILD_NUMBER}")
-                    //     image.push("latest")
-                    // }
-                    echo 'Update Testing5'
-                    sh 'docker login -u admin -p tnsqja4856 192.168.0.31:5000'
-                    sh "docker push ${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_NUM}"
-                    sh "docker push ${IMAGE_STORAGE}/${IMAGE_NAME}:latest"
-                }
-            }
-        }
+        // stage("Build Container Image"){
+        //     steps{
+        //         script{
+        //             sh "docker build -t ${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_NUM} ."
+        //             sh "docker build -t ${IMAGE_STORAGE}/${IMAGE_NAME}:latest ."
+        //         }
+        //     }
+        // }
+        // stage("Push ContainerImage"){
+        //     steps{
+        //         script{
+        //             echo "${IMAGE_STORAGE_CREDENTIAL_USERNAME}"
+        //             echo "${IMAGE_STORAGE_CREDENTIAL_PASSWORD}"
+        //             sh "docker login -u admin -p tnsqja4856 ${IMAGE_STORAGE}"
+        //             sh "docker push ${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_NUM}"
+        //             sh "docker push ${IMAGE_STORAGE}/${IMAGE_NAME}:latest"
+        //         }
+        //     }
+        // }
+        // stage("clear docker"){
+        //     steps{
+        //         script{
+        //             sh "docker rmi ${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_NUM}"
+        //             sh "docker rmi ${IMAGE_STORAGE}/${IMAGE_NAME}:latest"
+        //         }
+        //     }
+        // }
     }
 }
