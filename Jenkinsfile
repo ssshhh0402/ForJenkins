@@ -17,8 +17,8 @@ pipeline{
                     withCredentials([
                         usernamePassword(
                             credentialsId: 'NexusCredentials',
-                            id: 'Username',
-                            pwd: 'Password'
+                            Username: 'id',
+                            Password: 'pwd'
                         )
                     ]){
                         sh "Username: ${id}"
