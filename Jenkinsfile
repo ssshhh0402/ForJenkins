@@ -8,8 +8,6 @@ pipeline{
                     IMAGE_STORAGE = "192.168.0.31:5000"
                     IMAGE_STORAGE_CREDENTIAL = "NexusCredentials"
                     IMAGE_NUM = env.BUILD_NUMBER
-                    NEXUS_ID = 'NexusCredentials-secret-key-id'
-                    NEXUS_PWD = 
                 }
             }
         }
