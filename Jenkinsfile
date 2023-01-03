@@ -14,8 +14,16 @@ pipeline{
         stage("TEST"){
             steps{
                 script{
-                    sh "Username: ${IMAGE_STORAGE_CREDENTIAL_Username}"
-                    sh "Password: ${IMAGE_STORAGE_CREDENTIAL_Password}"
+                    withCredentials([
+                        NexusCredentialInfo(
+                            credentialsId: 'NexusCredentials',
+                            id: 'Username',
+                            pwd: 'Password'
+                        )
+                    ]){
+                        sh "Username: ${id}"
+                        sh "Password: ${pwd}"
+                    }
                 }
             }
         }
