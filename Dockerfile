@@ -9,9 +9,9 @@ RUN gradle clean build -x test --parallel --continue > /dev/null 2>&1 || true
 COPY . /build
 RUN gradle build -x test --parallel
 
-# APP
-FROM adoptopenjdk/openjdk14-openj9
-WORKDIR /app
+# # APP
+# FROM adoptopenjdk/openjdk14-openj9
+# WORKDIR /app
 
 # 빌더 이미지에서 jar 파일만 복사
 COPY --from=builder /build/build/libs/Ass3-0.0.1-SNAPSHOT.jar .
