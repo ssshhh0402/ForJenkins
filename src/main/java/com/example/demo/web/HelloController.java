@@ -21,6 +21,6 @@ public class HelloController {
 
 	@PostMapping("/test")
 	public String testing(){
-		return "Test16";
+		return "Test17";
 	}
 }
