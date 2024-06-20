@@ -5,9 +5,11 @@ FROM gradle:7.4-jdk11-alpine as builder
 # COPY build.gradle settings.gradle /build/
 RUN gradle clean build -x test --parallel --continue > /dev/null 2>&1 || true
 
-CMD ["ls -al"]
-CMD ["CD /build/libs"]
-CMD ["ls -al"]
+CMD ["ls", "-al"]
+CMD ["경로 이동"]
+CMD ["CD", "/build/libs"]
+CMD ["이동한 경로 내 파일 목록 확인"]
+CMD ["ls", "-al"]
 # 빌더 이미지에서 jar 파일만 복사
 # COPY --from=builder /build/build/libs/Ass3-0.0.1-SNAPSHOT.jar .
 # ARG JAR_FILE=build/libs/Ass3-0.0.1-SNAPSHOT.jar
