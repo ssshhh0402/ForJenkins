@@ -14,6 +14,8 @@ pipeline{
           echo 'Clone Start'
           sh "git pull ${REPO}"
           echo 'Clone Finish'
+          sh 'ls -al'
+          sh 'pwd'
         }
       }
     }
@@ -22,7 +24,7 @@ pipeline{
         script {
           sh 'ls -al'
           echo 'Build Start'
-          sh "docker build -t ${NEXUS_REPO}/${DOCKER_IMAGE}:latest ."
+          // sh "docker build -t ${NEXUS_REPO}/${DOCKER_IMAGE}:latest ."
           echo 'Build Finish'
         }
       }
@@ -32,8 +34,8 @@ pipeline{
         withCredentials([usernamePassword(credentialsId: 'nexus',usernameVariable:'NEXUS_ID',passwordVariable: 'NEXUS_PWD')]){
           script{
             echo 'push Start'
-            sh "docker login -u ${NEXUS_ID} -p ${NEXUS_PWD} ${NEXUS_REPO}"
-            sh "docker push ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
+            // sh "docker login -u ${NEXUS_ID} -p ${NEXUS_PWD} ${NEXUS_REPO}"
+            // sh "docker push ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
             echo 'push End'
           }
         }
@@ -43,7 +45,7 @@ pipeline{
       steps{
         script{
           echo 'clear docker'
-          sh "docker rmi ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
+          // sh "docker rmi ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
         }
       }
     }
