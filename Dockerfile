@@ -1,7 +1,5 @@
 FROM openjdk:17 as builder
 
-RUN apt-get update && apt-get install -y findutils
-
 workdir /var/jenkins_home/workspace/jwtest
 
 COPY gradle gradle
