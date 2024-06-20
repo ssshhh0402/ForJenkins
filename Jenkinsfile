@@ -42,6 +42,7 @@ pipeline{
     stage('clear docker'){
       steps{
         script{
+          echo 'clear docker'
           // sh "docker rmi ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
         }
       }
