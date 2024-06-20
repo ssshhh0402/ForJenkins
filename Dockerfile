@@ -11,4 +11,4 @@ ARG JAR_FILE=build/libs/Ass3-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} Ass3-0.0.1-SNAPSHOT.jar
 # EXPOSE 8080
 EXPOSE 9000
-ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/./urandom","-Dsun.net.inetaddr.ttl=0","Ass3-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/./urandom","-Dsun.net.inetaddr.ttl=0","/Ass3-0.0.1-SNAPSHOT.jar"]
