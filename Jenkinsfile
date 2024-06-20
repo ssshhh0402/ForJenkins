@@ -20,6 +20,7 @@ pipeline{
     stage('Build Docker Image'){
       steps{
         script {
+          sh 'ls -al'
           echo 'Build Start'
           sh "docker build -t ${NEXUS_REPO}/${DOCKER_IMAGE}:latest ."
           echo 'Build Finish'
@@ -30,10 +31,10 @@ pipeline{
       steps{
         withCredentials([usernamePassword(credentialsId: 'nexus',usernameVariable:'NEXUS_ID',passwordVariable: 'NEXUS_PWD')]){
           script{
-            'push Start'
+            echo 'push Start'
             sh "docker login -u ${NEXUS_ID} -p ${NEXUS_PWD} ${NEXUS_REPO}"
             sh "docker push ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
-            'push End'
+            echo 'push End'
           }
         }
       }
