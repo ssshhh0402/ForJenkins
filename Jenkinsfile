@@ -22,7 +22,7 @@ pipeline{
         script {
           sh 'ls -al'
           echo 'Build Start'
-          sh "docker build -t ${NEXUS_REPO}/${DOCKER_IMAGE}:latest ."
+          // sh "docker build -t ${NEXUS_REPO}/${DOCKER_IMAGE}:latest ."
           echo 'Build Finish'
         }
       }
@@ -33,7 +33,7 @@ pipeline{
           script{
             echo 'push Start'
             sh "docker login -u ${NEXUS_ID} -p ${NEXUS_PWD} ${NEXUS_REPO}"
-            sh "docker push ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
+            // sh "docker push ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
             echo 'push End'
           }
         }
@@ -42,7 +42,7 @@ pipeline{
     stage('clear docker'){
       steps{
         script{
-          sh "docker rmi ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
+          // sh "docker rmi ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
         }
       }
     }
