@@ -1,9 +1,23 @@
-FROM openjdk:17
+FROM openjdk:17 as builder
 workdir /var/jenkins_home/workspace/jwtest
 
-CMD [":./gradle", "clean", "build"]
-CMD ["ls", "-al"]
-CMD ["pwd"]
+COPY gradle gradle
+COPY gradlew .
+COPY build.gradle .
+COPY settings.gradle .
+
+RUN ./gradlew build --no-daemon -x test
+
+COPY src ./src
+
+RUN ./gradlew build --no-daemon -x test
+
+FROM openjdk:17
+workdir /var/jenkins_home/workspace/jwtest
+copy --from=build /var/jenkins_home/workspace/jwtest/build/libs/Ass3-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 9000
+
+CMD ["JAVA", "-jar", "app.jar"]
 # ARG JAR_FILE=/var/jenkins_home/workspace/jwtest/build/libs/Ass3-0.0.1-SNAPSHOT.jar
 
 # COPY ${JAR_FILE} app.jar
