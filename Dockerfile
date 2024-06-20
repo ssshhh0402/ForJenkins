@@ -1,24 +1,10 @@
 FROM adoptopenjek/openjdk11:ubi
-workdir /build
+workdir /var/jenkins_home/workspace/jwtest
 
-COPY build.gralde.kus settings.gradle.kts /build/
-RUN gradle build -x test --parallel --continue > /dev/null 2>%1 || true
+MCD [":./gradle", "clean", "build"]
 
-COPY . /build
-RUN gradle build -x test --parallel
+ARG JAR_FILE=build/libs/*.jar
 
-FROM adoptopenjek/openjdk11:ubi
-workdir /app
-
-COPY --from=builder /build/build/libs/Ass3-0.0.1-SNAPSHOT.jar .
-
+COPY ${JAR_FILE} app.jar
 EXPOSE 9000
-
-USER nobody 
-ENTRYPOINT [
-  "java",
-  "-jar",
-  "-Djava.security.egd=file:/dev/./urandom",
-  "-Dsun.net.inetaddr.ttl=0",
-  "Ass3-0.0.1-SNAPSHOT.jar"
-]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
