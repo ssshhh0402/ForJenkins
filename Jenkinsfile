@@ -12,7 +12,7 @@ piepeline{
       steps {
         script{
           echo 'Clone Start'
-          git branch 'master', url: "${REPO}"
+          sh "git pull ${REPO}"
           echo 'Clone Finish'
         }
       }
