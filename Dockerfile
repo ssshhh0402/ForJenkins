@@ -7,6 +7,8 @@ RUN gradle clean build -x test --parallel --continue > /dev/null 2>&1 || true
 
 # 빌더 이미지에서 jar 파일만 복사
 COPY --from=builder /build/build/libs/Ass3-0.0.1-SNAPSHOT.jar .
-
-EXPOSE 8080
+# ARG JAR_FILE=build/libs/Ass3-0.0.1-SNAPSHOT.jar
+# ADD ${JAR_FILE} Ass3-0.0.1-SNAPSHOT.jar
+# EXPOSE 8080
+EXPOSE 9000
 ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/./urandom","-Dsun.net.inetaddr.ttl=0","Ass3-0.0.1-SNAPSHOT.jar"]
