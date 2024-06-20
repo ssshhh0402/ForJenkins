@@ -4,7 +4,7 @@ pipeline{
   environment {
     REPO='https://github.com/ssshhh0402/ForJenkins'
     DOCKER_IMAGE='jktest'
-    NEXUS_REPO='http://211.177.182.225:5000'    
+    NEXUS_REPO='211.177.182.225:5000'    
   }
   
   stages{
