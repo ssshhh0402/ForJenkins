@@ -1,42 +1,69 @@
-pipeline{
-    agent any
-    stages{
-        stage("Set Variable"){
-            steps{
-                script {
-                    IMAGE_NAME="dockertesting3"
-                    IMAGE_STORAGE = "192.168.0.31:5000"
-                    IMAGE_STORAGE_CREDENTIAL = "NexusCredentials"
-                    IMAGE_TAG = env.BUILD_NUMBER
-                }
-            }
+piepeline{
+  agent any
+
+  environment {
+    REPO='https://github.com/ssshhh0402/ForJenkins'
+    DOCKER_IMAGE='jktest'
+    NEXUS_REPO='http://211.177.182.225:5000'    
+  }
+  
+  stages{
+    stage('Clone repository'){
+      steps {
+        script{
+          echo 'Clone Start'
+          git branch 'master', url: "${REPO}"
+          echo 'Clone Finish'
         }
-        stage("Build Container Image"){
-            steps{
-                script{
-                    sh "docker build -t ${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_TAG} ."
-                    sh "docker build -t ${IMAGE_STORAGE}/${IMAGE_NAME}:latest ."
-                }
-            }
-        }
-        stage("Push ContainerImage"){
-            steps{
-                script{
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'NexusCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]){
-                        sh "docker login -u ${USERNAME} -p ${PASSWORD} ${IMAGE_STORAGE}"
-                    }
-                    sh "docker push ${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker push ${IMAGE_STORAGE}/${IMAGE_NAME}:latest"
-                }
-            }
-        }
-        stage("clear docker"){
-            steps{
-                script{
-                    sh "docker rmi ${IMAGE_STORAGE}/${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker rmi ${IMAGE_STORAGE}/${IMAGE_NAME}:latest"
-                }
-            }
-        }
+      }
     }
+    stage('Build Docker Image'){
+      steps{
+        script {
+          echo 'Build Start'
+          sh "docker build -t ${NEXUS_REPO}/${DOCKER_IMAGE}:latest ."
+          echo 'Build Finish'
+        }
+      }
+    }
+    stage('Push to Nexus'){
+      steps{
+        withCredentials([usernamePassword(credentialsId: 'nexus',usernameVariable:'NEXUS_ID',passwordVariable: 'NEXUS_PWD')]){
+          script{
+            'push Start'
+            sh "docker login -u ${NEXUS_ID} -p ${NEXUS_PWD} ${NEXUS_REPO}"
+            sh "docker push ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
+            'push End'
+          }
+        }
+      }
+    }
+    stage('clear docker'){
+      steps{
+        script{
+          sh "docker rmi ${NEXUS_REPO}/${DOCKER_IMAGE}:latest"
+        }
+      }
+    }
+    stage('Deploy'){
+      steps{
+        script{
+          echo 'Deploy Start'
+          echo 'Deploy End'
+        }
+      }
+    }
+  }
+  
+  post{
+    always{
+      cleanWs()
+    }
+    success{
+      echo 'Pipeline Completed'
+    }
+    failure{
+      echo 'Pipeline failed'
+    }
+  }
 }
