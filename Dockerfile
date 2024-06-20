@@ -9,12 +9,11 @@ COPY settings.gradle .
 
 RUN chmod +x ./gradlew
 
-RUN ./gradlew build --no-daemon
+RUN ./gradlew clean build 
 
 COPY src ./src
 
-RUN ./gradlew build --no-daemon
-
+RUN ./gradlew clean build
 FROM openjdk:17
 workdir /var/jenkins_home/workspace/jwtest
 copy --from=builder /var/jenkins_home/workspace/jwtest/build/libs/Ass3-0.0.1-SNAPSHOT.jar app.jar
