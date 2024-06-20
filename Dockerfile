@@ -1,7 +1,7 @@
 FROM gradle:7.4-jdk11-alpine as builder
-WORKDIR /build
+# WORKDIR /build
 
-RUN cd /var/jenkins_home/workspace/jwtest
+# RUN cd /var/jenkins_home/workspace/jwtest
 RUN ls -al
 RUN pwd
 # 그래들 파일이 변경되었을 때만 새롭게 의존패키지 다운로드 받게함.
