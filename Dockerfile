@@ -8,11 +8,11 @@ COPY settings.gradle .
 
 RUN chmod +x ./gradlew
 
-RUN ./gradlew build --no-daemon -x test
+RUN ./gradlew build --no-daemon
 
 COPY src ./src
 
-RUN ./gradlew build --no-daemon -x test
+RUN ./gradlew build --no-daemon
 
 FROM openjdk:17
 workdir /var/jenkins_home/workspace/jwtest
