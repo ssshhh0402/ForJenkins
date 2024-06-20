@@ -23,7 +23,7 @@ pipeline{
       steps{
         script {
           echo 'Build Start'
-          sh 'gradle clean builder -x test'
+          sh './gradlew clean build -x test'
           echo 'Build End'
         }
       }
