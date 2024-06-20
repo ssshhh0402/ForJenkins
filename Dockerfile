@@ -1,7 +1,7 @@
 FROM adoptopenjek/openjdk11:ubi
 workdir /var/jenkins_home/workspace/jwtest
 
-MCD [":./gradle", "clean", "build"]
+CMD [":./gradle", "clean", "build"]
 
 ARG JAR_FILE=build/libs/*.jar
 
